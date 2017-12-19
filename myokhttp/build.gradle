@@ -1,0 +1,44 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 26
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 26
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Retrofit
+    api 'com.squareup.retrofit2:retrofit:2.3.0'
+    api 'com.squareup.retrofit2:converter-gson:2.3.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+
+    // RxJava
+    api 'io.reactivex.rxjava2:rxjava:2.1.6'
+
+    // RxAndroid
+    api 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+    // kotlin
+    api 'org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.51'
+
+    // RxDownLoad
+    api 'zlc.season:rxdownload3:latest.integration@aar'
+}
