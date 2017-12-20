@@ -1,11 +1,23 @@
 apply plugin: 'com.android.library'
 
+apply plugin: 'com.novoda.bintray-release'
+
 android {
     compileSdkVersion 26
+    buildToolsVersion "26.0.2"
 
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 26
+    }
+
+    signingConfigs {
+        config {
+            keyAlias 'myok'
+            keyPassword '12345678'
+            storeFile file('F:/DJOkHttpClient/myokhttp/myok.jks')
+            storePassword '12345678'
+        }
     }
 
     buildTypes {
@@ -15,30 +27,38 @@ android {
         }
 
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 
+    lintOptions {
+        abortOnError false
+    }
+}
+
+publish {
+    userOrg = 'dujianbo'      // bintray注册的用户名
+    groupId = 'com.dj.djokhttpclient'
+    artifactId = 'dj-okhttp'// bintray创建的package
+    publishVersion = '1.2'
+    desc = '自用okhttp封装'
+    website = 'https://github.com/dujianbo/DJOkHttpClient'
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     // Retrofit
     api 'com.squareup.retrofit2:retrofit:2.3.0'
     api 'com.squareup.retrofit2:converter-gson:2.3.0'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-
     // RxJava
     api 'io.reactivex.rxjava2:rxjava:2.1.6'
-
     // RxAndroid
     api 'io.reactivex.rxjava2:rxandroid:2.0.1'
-
-    // kotlin
-    api 'org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.51'
-
+    //    // kotlin
+    //    api 'org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.51'
     // RxDownLoad
     api 'zlc.season:rxdownload3:latest.integration@aar'
 }
